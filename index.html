@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow x Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <h2>StudyFlow Tracker</h2>
+        <div class="clock" id="clock">00:00:00</div>
+    </header>
+
+    <div class="card" id="morning-prompt">
+        <div class="card-title">🌅 Morning Check-in</div>
+        <p>Good morning! Is your schedule proceeding as planned today?</p>
+        <div class="btn-group">
+            <button id="btn-as-planned" class="primary">As Planned</button>
+            <button id="btn-need-changes">Need Changes</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Activity Heatmap</div>
+        <div class="heatmap-container" id="heatmap"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Weekly Setup</div>
+        <p class="help-text">Format: [Subject]: [Hours]h (Priority 1-5)<br>Press <strong>Ctrl + Enter</strong> to generate.</p>
+        <div id="warning-msg" class="warning-msg" role="alert"></div>
+        <textarea id="weekly-goals" placeholder="DSA: 10h (Priority 5)&#10;System Design: 5h (Priority 3)"></textarea>
+        <button id="btn-generate" class="primary">Generate Schedule</button>
+        <div class="stats" id="weekly-stats"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Today's Flow</div>
+        <div id="schedule-list" role="list">
+            <p class="help-text">Generate a schedule to see your day.</p>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
