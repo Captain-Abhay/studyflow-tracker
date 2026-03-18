@@ -1,44 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StudyFlow Tracker</title>
+:root {
+    --bg:#0b0f17;
+    --card:#151c2b;
+    --border:#2a3447;
+    --text:#dbe3f4;
+    --accent:#4f8cff;
+    --green1:#0e4429;
+    --green2:#006d32;
+    --green3:#26a641;
+    --green4:#39d353;
+}
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
+body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Outfit',sans-serif;
+    max-width:800px;
+    margin:auto;
+    padding:20px;
+}
 
-<body>
+header {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
 
-<header>
-    <h2>StudyFlow Tracker</h2>
-    <div id="clock"></div>
-</header>
+.card {
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
 
-<div class="card">
-    <div class="card-title">Work Schedule</div>
-    <input id="work-hours" placeholder="10-18">
-    <button id="save-work">Save</button>
-</div>
+.card-title {
+    font-size:0.8rem;
+    margin-bottom:10px;
+    opacity:0.7;
+}
 
-<div class="card">
-    <div class="card-title">Activity Heatmap</div>
-    <div id="heatmap"></div>
-</div>
+input, textarea {
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    color:white;
+}
 
-<div class="card">
-    <div class="card-title">Weekly Setup</div>
-    <textarea id="goals" placeholder="DSA: 10h (Priority 5)"></textarea>
-    <button id="generate">Generate</button>
-    <div id="warning"></div>
-</div>
+button {
+    background:var(--accent);
+    border:none;
+    padding:10px;
+    color:white;
+    cursor:pointer;
+    border-radius:6px;
+}
 
-<div class="card">
-    <div class="card-title">Today's Flow</div>
-    <div id="schedule"></div>
-</div>
+/* HEATMAP GRID */
+#heatmap {
+    display:flex;
+    gap:4px;
+}
 
-<script type="module" src="app.js"></script>
-</body>
-</html>
+.column {
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.cell {
+    width:14px;
+    height:14px;
+    border-radius:3px;
+    background:#1b2433;
+}
+
+.cell[data-level="1"] { background:var(--green1); }
+.cell[data-level="2"] { background:var(--green2); }
+.cell[data-level="3"] { background:var(--green3); }
+.cell[data-level="4"] { background:var(--green4); }
+
+/* TASK BLOCK */
+.block {
+    display:flex;
+    justify-content:space-between;
+    padding:10px;
+    margin-bottom:5px;
+    border-left:3px solid var(--accent);
+}
+
+.done {
+    opacity:0.5;
+}
