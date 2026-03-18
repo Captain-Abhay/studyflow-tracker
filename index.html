@@ -1,52 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow x Tracker</title>
-    <link rel="icon" href="./gemini-svg.svg" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyFlow Tracker</title>
+
+<style>
+:root {
+  --bg:#080a0f; --card:#161b26; --border:#252d3d;
+  --text:#dde3f0; --muted:#5c6a85; --accent:#4f8cff;
+  --green1:#0e4429; --green2:#006d32; --green3:#26a641; --green4:#39d353;
+}
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:sans-serif;
+  max-width:800px;
+  margin:auto;
+  padding:20px;
+}
+
+.card {
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  border:1px solid var(--border);
+}
+
+.card-title {
+  font-size:0.8rem;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+input, textarea {
+  width:100%;
+  padding:10px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:white;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+
+button {
+  background:var(--accent);
+  border:none;
+  padding:10px 15px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+#heatmap {
+  display:flex;
+  gap:4px;
+}
+
+.col {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.cell {
+  width:12px;
+  height:12px;
+  border-radius:2px;
+  background:#161b22;
+}
+
+.cell[data-level="1"] { background:var(--green1); }
+.cell[data-level="2"] { background:var(--green2); }
+.cell[data-level="3"] { background:var(--green3); }
+.cell[data-level="4"] { background:var(--green4); }
+
+.block {
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:6px;
+}
+
+.block.done {
+  opacity:0.5;
+}
+</style>
 </head>
+
 <body>
 
-<div id="app-container">
-    <header>
-        <h2>StudyFlow Tracker</h2>
-        <div class="clock" id="clock">00:00:00</div>
-    </header>
+<h2>StudyFlow Tracker</h2>
 
-    <div class="card" id="morning-prompt">
-        <div class="card-title">🌅 Morning Check-in</div>
-        <p>Good morning! Is your schedule proceeding as planned today?</p>
-        <div class="btn-group">
-            <button id="btn-as-planned" class="primary">As Planned</button>
-            <button id="btn-need-changes">Need Changes</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Activity Heatmap</div>
-        <div class="heatmap-container" id="heatmap"></div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Weekly Setup</div>
-        <p class="help-text">Format: [Subject]: [Hours]h (Priority 1-5)<br>Press <strong>Ctrl + Enter</strong> to generate.</p>
-        <div id="warning-msg" class="warning-msg" role="alert"></div>
-        <textarea id="weekly-goals" placeholder="DSA: 10h (Priority 5)&#10;System Design: 5h (Priority 3)"></textarea>
-        <button id="btn-generate" class="primary">Generate Schedule</button>
-        <div class="stats" id="weekly-stats"></div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">Today's Flow</div>
-        <div id="schedule-list" role="list">
-            <p class="help-text">Generate a schedule to see your day.</p>
-        </div>
-    </div>
+<div class="card">
+  <div class="card-title">Activity Heatmap</div>
+  <div id="heatmap"></div>
 </div>
 
-<script type="module" src="app.js"></script>
+<div class="card">
+  <div class="card-title">Work Schedule</div>
+  <input id="work-hours" placeholder="10-18">
+  <button id="save-work">Save Work Hours</button>
+</div>
+
+<div class="card">
+  <div class="card-title">Weekly Goals</div>
+  <textarea id="goals"></textarea>
+  <button id="generate">Generate Schedule</button>
+</div>
+
+<div class="card">
+  <div class="card-title">Today's Flow</div>
+  <div id="schedule"></div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

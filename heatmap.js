@@ -1,65 +1,38 @@
-import { getToday } from './state.js';
-
-// Utility: Map count → heat level
-export function getLevel(count) {
-    if (count >= 4) return 4;
-    if (count >= 3) return 3;
-    if (count >= 2) return 2;
-    if (count >= 1) return 1;
+function getLevel(c) {
+    if (c >= 4) return 4;
+    if (c >= 3) return 3;
+    if (c >= 2) return 2;
+    if (c >= 1) return 1;
     return 0;
 }
 
-// Utility: Faster date formatting
-function formatDate(date) {
-    return date.toISOString().slice(0, 10);
-}
+export function renderHeatmap(data) {
 
-// Render full heatmap (only on load)
-export function renderHeatmap(progressData) {
     const container = document.getElementById('heatmap');
-    const fragment = document.createDocumentFragment();
+    container.innerHTML = '';
 
-    const today = new Date(); // create once
+    const weeks = 12;
 
-    for (let i = 80; i >= 0; i--) {
-        const d = new Date(today); // clone
-        d.setDate(today.getDate() - i);
+    for (let w = 0; w < weeks; w++) {
 
-        const dateStr = formatDate(d);
-        const count = progressData[dateStr] || 0;
+        const col = document.createElement('div');
+        col.className = 'column';
 
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.dataset.date = dateStr;
-        cell.dataset.level = getLevel(count);
-        cell.title = `${dateStr}: ${count} tasks completed`;
+        for (let d = 0; d < 7; d++) {
 
-        // Optional: show count inside cell
-        if (count > 0) {
-            cell.textContent = count;
-            cell.style.fontSize = '10px';
-            cell.style.display = 'flex';
-            cell.style.alignItems = 'center';
-            cell.style.justifyContent = 'center';
+            const date = new Date();
+            date.setDate(date.getDate() - ((weeks-w)*7 - d));
+
+            const key = date.toISOString().split('T')[0];
+            const count = data[key] || 0;
+
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.level = getLevel(count);
+
+            col.appendChild(cell);
         }
 
-        fragment.appendChild(cell);
-    }
-
-    container.innerHTML = '';
-    container.appendChild(fragment);
-}
-
-// Update only today's cell (efficient)
-export function updateTodayHeatmap(count) {
-    const today = getToday();
-    const cell = document.querySelector(`.cell[data-date="${today}"]`);
-    
-    if (cell) {
-        cell.dataset.level = getLevel(count);
-        cell.title = `${today}: ${count} tasks completed`;
-
-        // Update visible count
-        cell.textContent = count > 0 ? count : '';
+        container.appendChild(col);
     }
 }
